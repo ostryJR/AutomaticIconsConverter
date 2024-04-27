@@ -1,3 +1,6 @@
 vislogo.png
 /toMakeImages/*
 /madeImages/*
+
+
+/__pycache__/*
