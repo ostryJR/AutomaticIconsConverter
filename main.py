@@ -12,11 +12,20 @@ def makeFolder(name):
         print(f"Folder {name} already exists")
 
 def scanForNewImages():
-    toMakeImages = os.listdir(cfg.pathToMake)#get all images in the toMake folder
     doneImages = []
-    for imageFolder in os.listdir(cfg.pathMade): #get all folders from the made folder
-        if os.path.isdir(imageFolder):
-            doneImages.append(imageFolder)
+    try:
+        toMakeImages = os.listdir(cfg.pathToMake)#get all images in the toMake folder
+    except:
+        os.mkdir(cfg.pathToMake)
+        toMakeImages = os.listdir(cfg.pathToMake)#get all images in the toMake folder
+        print("toMake folder created")
+    try:
+        for imageFolder in os.listdir(cfg.pathMade): #get all folders from the made folder
+            if os.path.isdir(imageFolder):
+                doneImages.append(imageFolder)
+    except:
+        os.mkdir(cfg.pathMade)
+        print("Made folder created")
     for image in toMakeImages:
         if image.split()[0] in doneImages:
             toMakeImages.remove(image)
