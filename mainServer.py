@@ -2,6 +2,7 @@ from PIL import Image
 import os
 import config as cfg
 import shutil
+import time
 
 def makeFolder(name):
     path = f'{cfg.pathMade}{name}'
@@ -50,13 +51,15 @@ def makeImage(imageName, size):
     print(f"Image {imageName.split('.')[0]} of size {size} made")
 
 if __name__ == "__main__":
-    imagesToMake = scanForNewImages()
-
-    for image in imagesToMake:
-        makeFolder(image.split('.')[0])
-        shutil.copyfile(image, f'{cfg.pathMade}/{image.split('.')[0]}/{image.split('.')[0]}Original.png')
-        for size in cfg.sizes:
-            makeImage(image, size)
-            pass
-            
-        os.remove(f'{cfg.pathToMake}{image}')
+    while True:
+        imagesToMake = scanForNewImages()
+        if imagesToMake != []:
+            for image in imagesToMake:
+                makeFolder(image.split('.')[0])
+                shutil.copyfile(image, f'{cfg.pathMade}/{image.split('.')[0]}/{image.split('.')[0]}Original.png')
+                for size in cfg.sizes:
+                    makeImage(image, size)
+                    pass
+                    
+                os.remove(f'{cfg.pathToMake}{image}')
+        time.sleep(cfg.timeToWait)
